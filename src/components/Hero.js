@@ -10,8 +10,9 @@ export default function Hero() {
 
   function addCard(oneCard) {
     setCardState(prevState => {
+      console.log(oneCard)
       return [
-        ...cardState,
+        ...prevState,
         oneCard
       ]
     })
@@ -21,7 +22,7 @@ export default function Hero() {
     <div className="hero">
       <UserInput addCard={addCard}/>
       <section className="card-scroll">
-        {cards}
+        {cardState}
       </section>
     </div>
   )
