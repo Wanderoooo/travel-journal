@@ -1,5 +1,6 @@
 import React from "react"
-export default function UserInput() {
+import Card from "./Card"
+export default function UserInput({addCard}) {
   
   const [state, setState] = React.useState(
     {
@@ -17,12 +18,27 @@ export default function UserInput() {
 
   function handleChange(event) {
     const {value, name} = event.target
+    console.log(state)
     setState(prevState => {
       return {
         ...prevState,
         [name] : value
       }
     })
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const newCardItem = {image: state.image_url,
+    location: state.country,
+    title: state.location,
+    gmap_url: state.maps_url,
+    from_date: `${state.day_a} ${state.month_a}, 2023`,
+    to_date: `${state.day_d} ${state.month_d}, 2023`,
+    paragraph: state.summary}
+
+    const newCard = <Card item={newCardItem} />
+    addCard(newCard)
   }
 
 return (
@@ -71,7 +87,7 @@ return (
 
     <section className="arrivalSection">
     <h4>Date of arrival:</h4>
-    <label for="day">{"day:  "}
+    <label htmlFor="day">{"day:  "}
       <select 
         id="day" 
         name="day_a" 
@@ -113,7 +129,7 @@ return (
           </select>
           </label>
 
-    <label for="month_a">{"  month:  "}
+    <label htmlFor="month_a">{"  month:  "}
       <select 
         id="month_a" 
         name="month_a"
@@ -139,7 +155,7 @@ return (
 
       <section className="departureSection">
       <h4>Date of departure:</h4>
-      <label for="day">{"day:  "}
+      <label htmlFor="day">{"day:  "}
       <select id="day" 
         name="day_d" 
         className="day"
@@ -181,7 +197,7 @@ return (
       </select>
     </label>
 
-    <label for="month_d">{"  month:  "}
+    <label htmlFor="month_d">{"  month:  "}
       <select id="month_d" 
       name="month_d"
       onChange={handleChange}
@@ -209,7 +225,7 @@ return (
       onChange={handleChange}
       value={state.summary}></textarea>
       </section>
-      <button type="submit" className="submit">Submit</button>
+      <button type="submit" className="submit" onClick={handleSubmit}>Submit</button>
   </form>
 </div>
 )
